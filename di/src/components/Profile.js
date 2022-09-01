@@ -11,13 +11,6 @@ const Profile = () => {
 
     axios.post("http://localhost:3001/profile", {
     }).then((response) => {
-        if (response.message === "Request failed with status code 404") {
-            swal("","Error","error");
-        }
-        else {
-            swal("hii"+response.data.result[0].email,"WELCOME TO PROFILE PAGE","success");
-           
-        }
 
     })
     return (

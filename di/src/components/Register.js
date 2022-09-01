@@ -53,12 +53,12 @@ function Register() {
             if (response.data.status === "success") {
                 swal("Congrats! " + formValues.firstName, "Successfully Registered", "success");
                 navigate("/Login");
-            } else if (response.data === "plz fill the data properly") {
-                swal("Hey! Fill all the details properly", "", "error")
             }
-
+             else if (response.data === "plz fill the data properly") {
+                swal("Hey! Fill all the details properly", "", "error");
+            }
             else {
-                console.log(response);
+                
                 if (response.data.status === "email error") {
                     swal('Already Registered User Go to Login Page', "", "warning");
                 }
@@ -66,7 +66,7 @@ function Register() {
                     swal('Give unique answer of your security Answer', "", "warning");
                 }
             }
-        });
+        }); 
 
     };
     useEffect(() => {
@@ -78,8 +78,7 @@ function Register() {
     const validate = (values) => {
         const errors = {};
         const emailValidator = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        const passwordValidator = /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{10,16}$/;
-
+        const passwordValidator=/^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{10,16}$/;
         if (!values.file) {
             errors.file = "Upload image";
         }
@@ -91,11 +90,22 @@ function Register() {
         }
         if (!values.email) {
             errors.email = "Email is required!";
-        } else if(!emailValidator.test(values.email)) {
+        } else 
+        if (!emailValidator.test(values.email)) {
             errors.email = "This is not a valid email format!";
         }
         if (!values.gender) {
             errors.gender = "Gender is required";
+        }
+        if (!values.password) {
+            errors.password = "Password is required!";
+        }else if(!passwordValidator.test(values.password)) {
+            errors.password = "Password must not contain Whitespaces and should contain at least one uppercase,one lowercase,one special,one digit and password should be the length of 10-16 characters";
+        }
+        if (!values.confirmPassword) {
+            errors.confirmPassword = "Confirm Password is required";
+        }else if (values.password !== values.confirmPassword) {
+            errors.confirmPassword = "Password and Confirm Password should be same";
         }
         if (!values.securityQuestion) {
             errors.securityQuestion = "Security Question is required";
@@ -103,19 +113,7 @@ function Register() {
         if (!values.securityAnswer) {
             errors.securityAnswer = "Unique Security Answer is required";
         }
-        if (!values.password) {
-            errors.password = "Password is required!";
-        }else if (!passwordValidator.test(values.password)) {
-            errors.password = "Password must not contain Whitespaces and should contain at least one uppercase,one lowercase,one special,one digit and password should be the length of 10-16 characters";
-        }
-        if (!values.confirmPassword) {
-            errors.confirmPassword = "Confirm Password is required";
-        }
-        if(values.password !== values.confirmPassword) {
-            errors.confirmPassword = "Password and Confirm Password should be same";
-        }
-    
-
+        
         return errors;
     };
     return (
@@ -265,14 +263,11 @@ function Register() {
                             <div className='mb-3 m-2 text-center form-group'>
                                 <button className="btn btn-warning text-center">Register</button>
                             </div>
-
-
-                            {Object.keys(formErrors).length === 0 && isSubmit ? (
+                              {Object.keys(formErrors).length === 0 && isSubmit ? (
                                 <div className="text-center alert alert-success">REGISTERED SUCCESSFULLY </div>
                             ) : (<pre className="text-left justify-content">{JSON.stringify(formValues, undefined, 2)}</pre>
                             )} 
-
-
+ 
 
                         </form>
                     </div>
@@ -284,6 +279,9 @@ function Register() {
     )
 }
 export default Register;
+
+
+
 
 
 
