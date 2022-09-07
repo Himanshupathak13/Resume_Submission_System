@@ -4,16 +4,17 @@ const conn = require("../db/conn");
 const multer = require('multer');
 const path = require('path')
 const cors = require("cors");
+const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-
+const JWT_SECRET = 'secret'
 const saltRound = 10;
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './public/upload');
   },
   filename: (req, file, cb) => {
-    cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + path.extname(file.originalname));
   }
 });
 const upload = multer({
@@ -29,7 +30,9 @@ const upload = multer({
 });
 //register user data
 router.post("/create", upload.single("file"), (req, res) => {
-  const file =  req.file;
+  const file = (req.file) ? req.file.filename : null;
+  console.log(req.file);
+  console.log(req.file.filename);
   const {
     firstName, lastName, gender, email, securityQuestion, securityAnswer, password, confirmPassword } = req.body;
   if (!file || !firstName || !lastName || !gender || !email || !securityQuestion || !securityAnswer || !password || !confirmPassword) {
@@ -37,7 +40,7 @@ router.post("/create", upload.single("file"), (req, res) => {
     dataerror['error'] = null
     dataerror['status'] = 'error'
     console.log("fill data properly", dataerror);
-    res.send("plz fill the data properly");
+    res.send(dataerror);
 
   }
   else {
@@ -62,17 +65,19 @@ router.post("/create", upload.single("file"), (req, res) => {
         }
 
         else {
+
           const sqlInsert = "INSERT INTO users (file,firstName,lastName,gender,email,securityQuestion,securityAnswer,password,confirmPassword) VALUES (?,?,?,?,?,?,?,?,?)";
           conn.query(sqlInsert, [file, firstName, lastName, gender, email, securityQuestion, securityAnswer, password, confirmPassword], (err, result) => {
             const successresult = {}
-            successresult['result'] = result
+            successresult['result'] = req.body;
             successresult['status'] = 'success'
             console.log("success", successresult);
             console.log(req.body);
             res.send(successresult);
-            }
-          
+          }
+
           )
+
         }
 
       });
@@ -132,8 +137,10 @@ router.post('/login', (req, res) => {
 
     }
   }
-});
 
+
+
+});
 // //forget
 
 // router.post('/forget', (req, res) => {
@@ -179,38 +186,40 @@ router.post('/login', (req, res) => {
 //  });
 
 
-router.get('/profile', (req, res) => {
-  try {
-    const sqlProfile = "SELECT * FROM users;"
-    conn.query(sqlProfile, (err, result) => {
-      if (result.length > 0) {
-        let successresult = {}
-        successresult['result'] = result
-        successresult['status'] = 'success'
-        console.log("success", successresult);
-        res.send(successresult);
-        res.render('profile', { data: result })
-      }
-      else {
-        let errorresult = {}
-        errorresult['error'] = err
-        errorresult['status'] = 'error'
-        console.log("else part", errorresult);
-        req.flash()
-        res.send(errorresult)
-        res.render('profile', { data: result })
+// router.get('/profile', (req, res) => {
+//   try {
+//     const sqlProfile = "SELECT * FROM users;"
+//     conn.query(sqlProfile, (err, result) => {
+//       if (result.length > 0) {
+//         let successresult = {}
+//         successresult['result'] = result
+//         successresult['status'] = 'success'
+//         console.log("success", successresult);
+//         res.send(successresult);
+//         //res.render('profile', { data: result })
+//       }
+//       else {
+//         let errorresult = {}
+//         errorresult['error'] = err
+//         errorresult['status'] = 'error'
+//         console.log("else part", errorresult);
+//         //req.flash()
+//         res.send(errorresult)
+//         //res.render('profile', { data: result })
 
-      }
+//       }
 
-    });
-  } catch (err) {
-    let catchresult = {}
-    catchresult['error'] = err
-    catchresult['status'] = 'error'
-    console.log("catch", catchresult);
-    res.send(catchresult)
-  }
-});
+//     });
+//   } catch (err) {
+//     let catchresult = {}
+//     catchresult['error'] = err
+//     catchresult['status'] = 'error'
+//     console.log("catch", catchresult);
+//     res.send(catchresult)
+//   }
+// });
+
+
 
 
 

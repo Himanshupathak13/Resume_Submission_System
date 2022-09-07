@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -9,7 +9,14 @@ function Register() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const [imagePath, setPath] = useState("");
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
+    useEffect(() => {
+        const auth = localStorage.getItem('new');
+        if (auth) {
+            navigate('/Profile');
+        }
+
+    },[])
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -22,8 +29,8 @@ function Register() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
-        setPath(process.env.REACT_APP_FILE_PATH);
-        setIsSubmit(false);
+        setPath(process.env.REACT_APP_FILE_PATH.file);
+        setIsSubmit(true);
         const formdata = new FormData();
         formdata.append('file', formValues.file);
         formdata.append('firstName', formValues.firstName);
@@ -36,23 +43,16 @@ function Register() {
         formdata.append('confirmPassword', formValues.confirmPassword);
 
         axios.post("http://localhost:3001/create", formdata, {
-            file: formValues.file,
-            firstName: formValues.firstName,
-            lastName: formValues.lastName,
-            gender: formValues.gender,
-            email: formValues.email,
-            securityQuestion: formValues.securityQuestion,
-            securityAnswer: formValues.securityAnswer,
-            password: formValues.password,
-            confirmPassword: formValues.confirmPassword,
+
         }).then((response) => {
             console.log(response);
-
             if (response.data.status === "success") {
                 swal("Congrats! " + formValues.firstName, "Successfully Registered", "success");
-               // navigate("/Login");
+                navigate("/Profile");
+                localStorage.setItem("new", JSON.stringify(response.data.result));
+                
             }
-            else if (response.data === "plz fill the data properly") {
+            else if (response.data === "fill the data properly") {
                 swal("Hey! Fill all the details properly", "", "error");
             }
             else {
@@ -68,9 +68,12 @@ function Register() {
 
     };
     useEffect(() => {
-        console.log(formErrors);
+
         if (Object.keys(formErrors).length === 0 && isSubmit) {
             console.log(formValues);
+        }
+        else {
+            console.log(formErrors);
         }
     }, [formErrors]);
 
@@ -80,11 +83,11 @@ function Register() {
         const passwordValidator = /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{10,16}$/;
         if (!values.file) {
             errors.file = "Upload image";
-        
+
         }
         if (!values.firstName) {
             errors.firstName = "First Name is required";
-        
+
         }
         if (!values.lastName) {
             errors.lastName = "Last Name is required";
@@ -108,11 +111,11 @@ function Register() {
         }
         if (!values.confirmPassword) {
             errors.confirmPassword = "Confirm Password is required";
-        } else 
-        {if (values.password !== values.confirmPassword) {
-            errors.confirmPassword = "Password and Confirm Password should be same";
+        } else {
+            if (values.password !== values.confirmPassword) {
+                errors.confirmPassword = "Password and Confirm Password should be same";
+            }
         }
-    }
         if (!values.securityQuestion) {
             errors.securityQuestion = "Security Question is required";
         }
@@ -144,6 +147,7 @@ function Register() {
                                     name="file"
                                     placeholder="Upload Image"
                                     accept=".png, .jpg, .jpeg"
+                                    value={imagePath.file}
                                     onChange={ImageUpload} />
                             </div>
                             <p className='text-center alert-danger'>{formErrors.file}</p>
@@ -182,9 +186,9 @@ function Register() {
                                     onChange={handleChange}
                                     value={formValues.gender}>
                                     <option defaultValue>Select Gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="prefer not to say">Prefer Not to Say</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Prefer not to say">Prefer Not to Say</option>
                                 </select>
                             </div>
                             <p className='text-center alert-danger'>{formErrors.gender}</p>
@@ -255,15 +259,16 @@ function Register() {
                             </div>
                             <p className='text-center alert-danger'>{formErrors.confirmPassword}</p>
 
+
+                            <div className='mb-3 m-2 text-center form-group'>
+                                <button className="btn btn-warning text-center">Register</button>
+                            </div>
+
                             {Object.keys(formErrors).length === 0 && isSubmit ? (
                                 <div className="text-center alert alert-success">REGISTERED SUCCESSFULLY </div>
                             ) : (<pre className="text-left justify-content">{JSON.stringify(formValues, undefined, 2)}</pre>
                             )}
 
-                            <div className='mb-3 m-2 text-center form-group'>
-                                <button className="btn btn-warning text-center">Register</button>
-                            </div>
-                          
 
 
                         </form>

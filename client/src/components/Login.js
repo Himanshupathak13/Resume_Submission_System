@@ -13,6 +13,13 @@ function Login() {
     const [isSubmit, setIsSubmit] = useState(false);
 
     const navigate = useNavigate();
+    useEffect(() => {
+        const auth = localStorage.getItem('new');
+        if (auth) {
+            navigate('/Profile');
+        }
+
+    }, []);
 
 
     const handleChange = (e) => {
@@ -30,18 +37,19 @@ function Login() {
         }).then((response) => {
             console.log(response)
             if (response.data.status === "success") {
-                 swal("Congrats! "+formValues.email,"Successfully logged in","success");
-                //navigate("/Profile");
-              
+                swal("Congrats! " + formValues.email, "Successfully logged in", "success");
+                localStorage.setItem("new", JSON.stringify(response.data.result[0]));
+                navigate("/Profile");
+
 
             }
             else if (response.data === "plz fill the data properly") {
-                swal("Hey! Fill all the details properly","","error")
-                
+                swal("Hey! Fill all the details properly", "", "error")
+
             }
             else {
                 console.log(response);
-                swal('wrong username/password',"","error");
+                swal('wrong username/password', "", "error");
             }
 
         });
@@ -66,10 +74,6 @@ function Login() {
         }
         if (!values.password) {
             errors.password = "Password is required";
-        } else if (values.password.length < 4) {
-            errors.password = "Password must be more than 4 characters";
-        } else if (values.password.length > 10) {
-            errors.password = "Password cannot exceed more than 10 characters";
         }
 
         return errors;

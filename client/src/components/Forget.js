@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import {useNavigate}from 'react-router-dom';
 
 
 function Forget() {
@@ -9,6 +10,14 @@ function Forget() {
 
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
+    const navigate=useNavigate();
+    useEffect(() => {
+        const auth = localStorage.getItem('new');
+        if (auth) {
+            navigate('/Profile');
+        }
+
+    },[])
 
 
     const handleChange = (e) => {
