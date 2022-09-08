@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import Profile from './components/Profile';
 import PageNotFound from './components/PageNotFound';
 import PrivateComponent from './components/PrivateComponent';
+import Upload from './components/Upload';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/FetchNews" element={<FetchNews />} />
         <Route path="/Profile" element={<Profile />} /> 
         <Route path="*" element={<PageNotFound/>} />
+        <Route path="/Upload" element={<Upload/>} />
         </Route>
         <Route path="/" element={<Home />} />
         <Route path="/Register" element={<Register />} />

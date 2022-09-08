@@ -11,7 +11,7 @@ const JWT_SECRET = 'secret'
 const saltRound = 10;
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './public/upload');
+    cb(null, './public/upload/');
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -19,6 +19,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({
   storage: storage,
+  // limits:{
+  //      fileSize:1024*1024*5
+  // },
   fileFilter: (req, file, cb) => {
     if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
       cb(null, true);
@@ -31,8 +34,6 @@ const upload = multer({
 //register user data
 router.post("/create", upload.single("file"), (req, res) => {
   const file = (req.file) ? req.file.filename : null;
-  console.log(req.file);
-  console.log(req.file.filename);
   const {
     firstName, lastName, gender, email, securityQuestion, securityAnswer, password, confirmPassword } = req.body;
   if (!file || !firstName || !lastName || !gender || !email || !securityQuestion || !securityAnswer || !password || !confirmPassword) {
@@ -69,10 +70,12 @@ router.post("/create", upload.single("file"), (req, res) => {
           const sqlInsert = "INSERT INTO users (file,firstName,lastName,gender,email,securityQuestion,securityAnswer,password,confirmPassword) VALUES (?,?,?,?,?,?,?,?,?)";
           conn.query(sqlInsert, [file, firstName, lastName, gender, email, securityQuestion, securityAnswer, password, confirmPassword], (err, result) => {
             const successresult = {}
-            successresult['result'] = req.body;
+            successresult['result'] = result;
             successresult['status'] = 'success'
             console.log("success", successresult);
             console.log(req.body);
+            console.log(req.file.filename)
+            console.log(req);
             res.send(successresult);
           }
 
@@ -141,84 +144,38 @@ router.post('/login', (req, res) => {
 
 
 });
-// //forget
+router.post('/upload', async (req, res) => {
+  const {uploadfile,message} = req.body;
 
-// router.post('/forget', (req, res) => {
-//   const { email } = req.body;
-//   console.log(req.body);
-//   if (email.length === 0) {
-//     const dataerror = {}
-//     dataerror['error'] = null
-//     dataerror['status'] = 'error'
-//     console.log("fill data properly", dataerror);
-//     res.send("plz fill the data properly");
+  if (!uploadfile || !message) {
+    const dataerror = {}
+    dataerror['error'] = null
+    dataerror['status'] = 'error'
+    console.log("fill data properly", dataerror);
+    res.send("plz fill the data properly");
 
-//   } else {
-//     try {
-//       const sqlNew = "SELECT * FROM users WHERE email=?"
-//       conn.query(sqlNew, [email], (err, result) => {
-//         if (result.length > 0) {
-//           let successresult = {}
-//           successresult['result'] = result
-//           successresult['status'] = 'success'
-//           console.log("success", successresult);
-//           res.send(successresult);
-//         }
-//         else {
-//           let errorresult = {}
-//           errorresult['error'] = err
-//           errorresult['status'] = 'error'
-//           console.log("else part", errorresult);
-//           res.send(errorresult)
+  } else {
+    try {
+      const sqlProduct = "INSERT INTO products (uploadfile,message) VALUES (?,?)";
+      conn.query(sqlProduct, [uploadfile, message], (err, result) => {
+        const successresult = {}
+        successresult['result'] = result;
+        successresult['status'] = 'success'
+        console.log("success", successresult);
+        res.send(successresult);
+      });
+    } catch (err) {
+      let catchresult = {}
 
-//         }
+      catchresult['error'] = err
+      catchresult['status'] = 'error'
+      console.log("catch", catchresult);
+      res.send(catchresult)
 
-//       });
-//     } catch (err) {
-//       let catchresult = {}
+    }
+  }
 
-//       catchresult['error'] = err
-//       catchresult['status'] = 'error'
-//       console.log("catch", catchresult);
-//       res.send(catchresult)
-//     }
-//   }
-//  });
-
-
-// router.get('/profile', (req, res) => {
-//   try {
-//     const sqlProfile = "SELECT * FROM users;"
-//     conn.query(sqlProfile, (err, result) => {
-//       if (result.length > 0) {
-//         let successresult = {}
-//         successresult['result'] = result
-//         successresult['status'] = 'success'
-//         console.log("success", successresult);
-//         res.send(successresult);
-//         //res.render('profile', { data: result })
-//       }
-//       else {
-//         let errorresult = {}
-//         errorresult['error'] = err
-//         errorresult['status'] = 'error'
-//         console.log("else part", errorresult);
-//         //req.flash()
-//         res.send(errorresult)
-//         //res.render('profile', { data: result })
-
-//       }
-
-//     });
-//   } catch (err) {
-//     let catchresult = {}
-//     catchresult['error'] = err
-//     catchresult['status'] = 'error'
-//     console.log("catch", catchresult);
-//     res.send(catchresult)
-//   }
-// });
-
+})
 
 
 

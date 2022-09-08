@@ -2,7 +2,7 @@ import React from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link, useNavigate } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
   const auth = localStorage.getItem('new');
@@ -23,6 +23,7 @@ const NavBar = () => {
                 auth ?
                   <>
                     <Nav.Link className="btn btn-warning m-1 p-2" href="/Profile">Profile</Nav.Link>
+                    <Nav.Link className="btn btn-warning m-1 p-2" href="/Upload">Upload</Nav.Link>
                     <Nav.Link className="btn btn-warning m-1 p-2" onClick={logout} to="/">Logout</Nav.Link>
                   </>
                   : <>

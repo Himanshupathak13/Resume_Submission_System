@@ -4,12 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 
 function Register() {
-    const initialValues = { file: "", firstName: "", lastName: "", gender: "", email: "", securityQuestion: "", securityAnswer: "", password: "", confirmPassword: "" };
-    const [formValues, setFormValues] = useState(initialValues);
-    const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
-    const [imagePath, setPath] = useState("");
-    const navigate = useNavigate();
     useEffect(() => {
         const auth = localStorage.getItem('new');
         if (auth) {
@@ -17,6 +11,12 @@ function Register() {
         }
 
     },[])
+    const initialValues = { file: "", firstName: "", lastName: "", gender: "", email: "", securityQuestion: "", securityAnswer: "", password: "", confirmPassword: "" };
+    const [formValues, setFormValues] = useState(initialValues);
+    const [formErrors, setFormErrors] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
+    //const [imagePath, setPath] = useState("");
+    const navigate = useNavigate();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -29,10 +29,10 @@ function Register() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
-        setPath(process.env.REACT_APP_FILE_PATH.file);
+        //setPath(process.env.REACT_APP_FILE_PATH+formValues.file);
         setIsSubmit(true);
         const formdata = new FormData();
-        formdata.append('file', formValues.file);
+        formdata.append('file', formValues.file,formValues.file.name);
         formdata.append('firstName', formValues.firstName);
         formdata.append('lastName', formValues.lastName);
         formdata.append('email', formValues.email);
@@ -147,7 +147,6 @@ function Register() {
                                     name="file"
                                     placeholder="Upload Image"
                                     accept=".png, .jpg, .jpeg"
-                                    value={imagePath.file}
                                     onChange={ImageUpload} />
                             </div>
                             <p className='text-center alert-danger'>{formErrors.file}</p>
@@ -263,11 +262,11 @@ function Register() {
                             <div className='mb-3 m-2 text-center form-group'>
                                 <button className="btn btn-warning text-center">Register</button>
                             </div>
-
+{/* 
                             {Object.keys(formErrors).length === 0 && isSubmit ? (
                                 <div className="text-center alert alert-success">REGISTERED SUCCESSFULLY </div>
                             ) : (<pre className="text-left justify-content">{JSON.stringify(formValues, undefined, 2)}</pre>
-                            )}
+                            )} */}
 
 
 

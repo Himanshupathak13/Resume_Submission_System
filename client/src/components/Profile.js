@@ -6,6 +6,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 const Profile = () => {
     const auth = localStorage.getItem('new');
+    const src=`http://localhost:3001/public/upload/${JSON.parse(auth).file}`;
     const navigate = useNavigate();
     useEffect(() => {
         const auth = localStorage.getItem('new');
@@ -24,7 +25,7 @@ const Profile = () => {
             </section>
             <div className='text-center bg-warning m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center'>
             <Card style={{ width: '18rem' }} className="text-center m-5 mt-5 pt-5 p-2 d-flex aligns-items-center justify-content-md-center ">
-                <Card.Img variant="top" src={pg2} />
+                <Card.Img variant="top" src={src} alt={pg2}/>
                 <Card.Body>
                     <Card.Title>{JSON.parse(auth).firstName}</Card.Title>
                     <Card.Title>{JSON.parse(auth).lastName}</Card.Title>
