@@ -99,8 +99,8 @@ function Register() {
             console.log(response);
             if (response.data.status === "success") {
                 swal("Congrats! " + formValues.firstName, "Successfully Registered", "success");
-                navigate("/Profile");
-                localStorage.setItem("new", JSON.stringify(response.data.result));
+                navigate("/Login");
+                //localStorage.setItem("new", JSON.stringify(response.data.result));
                 
             }
             else if (response.data.status === "error") {
