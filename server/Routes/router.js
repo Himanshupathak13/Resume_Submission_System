@@ -19,11 +19,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({
   storage: storage,
-  // limits:{
-  //      fileSize:1024*1024*5
-  // },
+  limits:{
+       fileSize:1024*1024*5
+  },
   fileFilter: (req, file, cb) => {
-    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/avif") {
       cb(null, true);
     } else {
       cb(null, false);
@@ -33,8 +33,9 @@ const upload = multer({
 });
 //register user data
 router.post("/create", upload.single("file"), (req, res) => {
-  const file = (req.file) ? req.file.filename : null;
+  //const file = (req.file) ? req.file.filename : null;
   const {
+    file=req.file.filename,
     firstName, lastName, gender, email, securityQuestion, securityAnswer, password, confirmPassword } = req.body;
   if (!file || !firstName || !lastName || !gender || !email || !securityQuestion || !securityAnswer || !password || !confirmPassword) {
     const dataerror = {}
@@ -70,13 +71,12 @@ router.post("/create", upload.single("file"), (req, res) => {
           const sqlInsert = "INSERT INTO users (file,firstName,lastName,gender,email,securityQuestion,securityAnswer,password,confirmPassword) VALUES (?,?,?,?,?,?,?,?,?)";
           conn.query(sqlInsert, [file, firstName, lastName, gender, email, securityQuestion, securityAnswer, password, confirmPassword], (err, result) => {
             const successresult = {}
-            successresult['result'] = result;
+            successresult['result'] = req.body;
             successresult['status'] = 'success'
             console.log("success", successresult);
             console.log(req.body);
-            console.log(req.file.filename)
-            console.log(req);
             res.send(successresult);
+
           }
 
           )
