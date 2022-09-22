@@ -25,20 +25,20 @@ function FetchNews() {
       </section>
       <div class="container">
         <div class="col-md-12 text-center">
-           <button className='btn btn-warning m-2 mt-5 p-2' onClick={fetchNews}>FetchNews</button>
-          </div>
-          </div>
-      
+          <button className='btn btn-warning m-2 mt-5 p-2' onClick={fetchNews}>FetchNews</button>
+        </div>
+      </div>
+
 
       <div className='container mt-4'>
         <div className='row'>
           {
             news.map((value) => {
               return (
-              
+
                 <div className='col-sm-4 text-center justify-content'>
                   <div className="card mb-2">
-                    <img src={value.urlToImage} className="card-img-top" alt="..."/>
+                    <img src={value.urlToImage} className="card-img-top" alt="..." />
                     <div className="card-body">
                       <h5 className="card-title">{value.title}</h5>
                       <p className="card-text">{value.description}</p>

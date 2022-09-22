@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 
-function Login() {
+function UserLogin() {
     const initialValues = { email: "", password: "" };
     const [formValues, setFormValues] = useState(initialValues);
 
@@ -16,7 +16,11 @@ function Login() {
     useEffect(() => {
         const auth = localStorage.getItem('new');
         if (auth) {
-            navigate('/Profile');
+            navigate('/UserProfile');
+        }
+        const auth2 = localStorage.getItem('admin');
+        if (auth2) {
+            navigate('/AdminProfile');
         }
 
     }, []);
@@ -39,7 +43,7 @@ function Login() {
             if (response.data.status === "success") {
                 swal("Congrats! " + formValues.email, "Successfully logged in", "success");
                 localStorage.setItem("new", JSON.stringify(response.data.result[0]));
-                navigate("/Profile");
+                navigate("/UserProfile");
 
 
             }
@@ -87,7 +91,7 @@ function Login() {
 
             <section className="text-center bg-warning m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
 
-                <h4 className="p-2 mt-5">WELCOME TO LOGIN PAGE</h4>
+                <h4 className="p-2 mt-5">WELCOME TO USER LOGIN PAGE</h4>
 
             </section>
             <div class="container mt-5 ">
@@ -146,4 +150,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default UserLogin;

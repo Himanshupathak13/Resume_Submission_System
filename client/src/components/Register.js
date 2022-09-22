@@ -7,7 +7,11 @@ function Register() {
     useEffect(() => {
         const auth = localStorage.getItem('new');
         if (auth) {
-            navigate('/Profile');
+            navigate('/UserProfile');
+        }
+        const auth2 = localStorage.getItem('admin');
+        if (auth2) {
+            navigate('/AdminProfile');
         }
 
     },[])
@@ -19,7 +23,7 @@ function Register() {
     const [emailValidation,setEmailValidation]=useState(false);
     const [passwordValidation,setPasswordValidation] = useState(false);
     const [confirmValidation,setConfirmValidation] = useState(false);
-    //const [imagePath, setPath] = useState("");
+    
     const navigate = useNavigate();
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -99,8 +103,8 @@ function Register() {
             console.log(response);
             if (response.data.status === "success") {
                 swal("Congrats! " + formValues.firstName, "Successfully Registered", "success");
-                navigate("/Login");
-                //localStorage.setItem("new", JSON.stringify(response.data.result));
+                navigate("/UserLogin");
+                
                 
             }
             else if (response.data.status === "error") {
