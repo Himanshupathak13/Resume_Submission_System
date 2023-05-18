@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useMemo } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom'
 import FileDownload from 'js-file-download';
+//import Pagination from './Pagination';
+
 const UserDashboard = () => {
   const [products, setProducts] = useState([]);
   const auth = localStorage.getItem('new');
@@ -43,6 +45,16 @@ const UserDashboard = () => {
         responseType: 'blob'
       })
     } 
+  //   let PageSize = 10;
+
+  // const [currentPage, setCurrentPage] = useState(1);
+
+  // const currentTableData = useMemo(() => {
+  //   const firstPageIndex = (currentPage - 1) * PageSize;
+  //   const lastPageIndex = firstPageIndex + PageSize;
+  //   return products.slice(firstPageIndex, lastPageIndex);
+  // }, [currentPage]);
+
   
   
   return (
@@ -51,8 +63,8 @@ const UserDashboard = () => {
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"></link>
       <script src="sweetalert.min.js"></script>
 
-      <section className="text-center bg-warning m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
-        <h4 className="p-2 mt-5">Welcome to User Dashboard Page</h4>
+      <section style={{backgroundColor:"#c5aa6a"}}className="text-center m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
+        <h4 style={{color:"#741b47"}}className="p-2 mt-5">WELCOME TO USER DASHBOARD PAGE</h4>
       </section>
 
       <div className='product-list'>
@@ -73,9 +85,18 @@ const UserDashboard = () => {
                 <button onClick={(e)=>doDelete} className='m-1 p-0'>Delete</button>
               </li>
             </ul>
+            
           )
             : <h1>No Result Found</h1>
+            
         }
+        {/* <Pagination
+            className="pagination-bar"
+            currentPage={currentPage}
+            totalCount={products.length}
+            pageSize={PageSize}
+            onPageChange={page => setCurrentPage(page)}
+          /> */}
        
 
       </div>

@@ -3,6 +3,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import {
+    MDBBtn,
+    MDBContainer,
+    MDBRow,
+    MDBCol,
+    MDBCard,
+    MDBCardBody,
+    MDBCardImage,
+    MDBInput,
+    MDBIcon,
+    MDBCheckbox
+  }
+  from 'mdb-react-ui-kit';
+
+
+
+
 
 function AdminLogin() {
     const initialValues = { username: "", password: "" };
@@ -89,9 +106,9 @@ function AdminLogin() {
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"></link>
             <script src="sweetalert.min.js"></script>
 
-            <section className="text-center bg-warning m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
+            <section style={{backgroundColor:"#c5aa6a"}}className="text-center m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
 
-                <h4 className="p-2 mt-5">WELCOME TO ADMIN LOGIN PAGE</h4>
+                <h4 className="p-2 mt-5"style={{color:"#741b47"}}>WELCOME TO ADMIN LOGIN PAGE</h4>
 
             </section>
             <div class="container mt-5 ">
@@ -99,8 +116,8 @@ function AdminLogin() {
                     <div className="col-sm-4">
                         <form onSubmit={handleSubmit}>
 
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>Username</label>
+                        <div className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="user me-3" size='lg' className='required-field'/>
                                 <input
                                     className='form-control text-center'
                                     type="text"
@@ -111,8 +128,8 @@ function AdminLogin() {
                             </div>
                             <p className='text-center alert-danger'>{formErrors.username}</p>
 
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>Password</label>
+                            <div className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="lock me-3" size='lg' className='required-field'/>
                                 <input
                                     className='form-control text-center'
                                     type="password"
@@ -125,7 +142,7 @@ function AdminLogin() {
 
 
                             <div className='mb-3 m-2 text-center form-group'>
-                                <button className="btn btn-warning text-center">Login</button>
+                                <button className="btn text-center"style={{backgroundColor:"#741b47",color:"#c5aa6a",fontWeight: 'bold'}}>Login</button>
                             </div>
                         </form>
                     </div>

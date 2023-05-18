@@ -69,9 +69,9 @@ const Upload = () => {
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"></link>
       <script src="sweetalert.min.js"></script>
 
-      <section className="text-center bg-warning m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
+      <section style={{backgroundColor:"#c5aa6a"}}className="text-center m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
 
-        <h4 className="p-2 mt-5">Welcome to Upload Page</h4>
+        <h4 style={{color:"#741b47"}}className="p-2 mt-5">WELCOME TO UPLOAD PAGE</h4>
 
       </section>
       <div class="container mt-5 ">
@@ -106,7 +106,7 @@ const Upload = () => {
               {formErrors && !formValues.message ? <p className='text-center alert-danger'>Message is required</p> : ""}
 
               <div className="text-center">
-                <button className="btn btn-warning ml-2">Upload</button>
+                <button className="btn ml-2"style={{backgroundColor:"#741b47",color:"#c5aa6a",fontWeight: 'bold'}}>Upload</button>
               </div>
             </form>
           </div>

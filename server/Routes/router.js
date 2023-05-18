@@ -344,56 +344,56 @@ router.get('/admindashboard', async (req, res) => {
 //////////////////////////////// 
 /////////////Download feature/////////////////// 
 
-router.get('/userdashboard/:uploadfile', async (req, res) => {
-  try {
-    const file = await File.findById(req.params.id);
-    res.set({
-      'Content-Type': file.file_mimetype
-    });
-    //res.sendFile(path.join(__dirname, '..', file.file_path));
-  } catch (error) {
-    res.status(400).send('Error while downloading file. Try again later.');
-  }
-});
+// router.get('/userdashboard/:uploadfile', async (req, res) => {
+//   try {
+//     const file = await File.findById(req.params.id);
+//     res.set({
+//       'Content-Type': file.file_mimetype
+//     });
+//     //res.sendFile(path.join(__dirname, '..', file.file_path));
+//   } catch (error) {
+//     res.status(400).send('Error while downloading file. Try again later.');
+//   }
+// });
 
 
 //////////////////////////////// 
 //////////////////////////////// 
-/////////////Delete feature///////////////////
-router.delete("/userdashboard/:uploadfile", async (req, resp) => {
-  const uploadfile = req.body;
- console.log(uploadfile, "delete");
-  try {
-    const sqlDel = "DELETE * FROM products where uploadfile=?";
-    conn.query(sqlDel,[uploadfile],(err, result) => {
-      if (result.length > 0) {
-        let successresult = {}
-        successresult['result'] = result
-        successresult['status'] = 'success'
-        console.log("success", successresult);
-        res.send(result);
-        console.log(successresult)
-      }
-      else {
-        let errorresult = {}
-        errorresult['error'] = err
-        errorresult['status'] = 'error'
-        console.log("else part", errorresult);
-        res.send(errorresult)
+// /////////////Delete feature///////////////////
+// router.delete("/userdashboard/:uploadfile", async (req, resp) => {
+//   const uploadfile = req.body;
+//  console.log(uploadfile, "delete");
+//   try {
+//     const sqlDel = "DELETE * FROM products where uploadfile=?";
+//     conn.query(sqlDel,[uploadfile],(err, result) => {
+//       if (result.length > 0) {
+//         let successresult = {}
+//         successresult['result'] = result
+//         successresult['status'] = 'success'
+//         console.log("success", successresult);
+//         res.send(result);
+//         console.log(successresult)
+//       }
+//       else {
+//         let errorresult = {}
+//         errorresult['error'] = err
+//         errorresult['status'] = 'error'
+//         console.log("else part", errorresult);
+//         res.send(errorresult)
 
-      }
+//       }
 
-    });
-  } catch (err) {
-    let catchresult = {}
+//     });
+//   } catch (err) {
+//     let catchresult = {}
 
-    catchresult['error'] = err
-    catchresult['status'] = 'error'
-    console.log("catch", catchresult);
-    res.send(catchresult)
+//     catchresult['error'] = err
+//     catchresult['status'] = 'error'
+//     console.log("catch", catchresult);
+//     res.send(catchresult)
 
-  }
-});
+//   }
+// });
 
 //////////////////////////////// 
 //////////////////////////////// 
@@ -508,6 +508,20 @@ router.post('/Reset-password/:email/:token', async(req, res, next) => {
   }
   
 });
+router.get('/anything',(req,res)=>{
+  const {email}=req.body;
+  const sqlInsert='SELECT * FROM users where email=?';
+  conn.query(sqlInsert,[email],(err,result)=>{
+    if(result.length > 0)
+    {
+      console.log(email);
+    }
+    
+
+  })
+
+
+})
 
 
 module.exports = router;

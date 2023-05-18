@@ -2,6 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
+import {
+    MDBBtn,
+    MDBContainer,
+    MDBRow,
+    MDBCol,
+    MDBCard,
+    MDBCardBody,
+    MDBCardImage,
+    MDBInput,
+    MDBIcon,
+    MDBCheckbox
+  }
+  from 'mdb-react-ui-kit';
+
 
 function Register() {
     useEffect(() => {
@@ -127,28 +141,18 @@ function Register() {
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"></link>
 
-            <section className="text-center bg-warning m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
-                <h4 className="p-2 mt-5">WELCOME TO REGISTRATION PAGE</h4>
+            <section style={{backgroundColor:"#c5aa6a"}}className="text-center m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
+                <h4 style={{color:"#741b47"}}className="p-2 mt-5">WELCOME TO REGISTRATION PAGE</h4>
             </section>
 
             <div class="container mt-5 ">
                 <div className="row aligns-items-center justify-content-center">
                     <div className="col-sm-4">
                         <form onSubmit={handleSubmit}>
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>Upload Image</label>
-                                <input
-                                    className='form-control text-center'
-                                    type="file"
-                                    name="file"
-                                    placeholder="Upload Image"
-                                    accept=".png, .jpg, .jpeg"
-                                    onChange={ImageUpload} />
-                            </div>
-                            {formErrors && !formValues.file && <p className='text-center alert-danger'>Upload image</p>}
 
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>First Name</label>
+
+                            <div className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="user me-3" size='lg' className='required-field'/>
                                 <input
                                     className='form-control text-center'
                                     type="text"
@@ -161,8 +165,8 @@ function Register() {
 
                             
 
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>Last Name</label>
+                            <div className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="user me-3" size='lg' className='required-field'/>
                                 <input
                                     className='form-control text-center'
                                     type="text"
@@ -173,9 +177,22 @@ function Register() {
                             </div>
                             {formErrors && !formValues.lastName && <p className='text-center alert-danger'>Last Name is required</p>}
 
+                            <div className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="envelope me-3" size='lg' className='required-field'/>
+                                <input
+                                    className='form-control text-center'
+                                    type="text"
+                                    name="email"
+                                    placeholder="Email"
+                                    value={formValues.email}
+                                    onChange={handleChange} />
+                            </div>
+                            {formErrors && !formValues.email ?<p className='text-center alert-danger'>Email is required</p>:""}
+                            {emailValidation && <p className='text-center alert-danger'>This is not a valid format</p>}
 
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>Select Gender</label>
+
+                            <div className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="restroom me-3" size='lg' className='required-field'/>
                                 <select className='form-control text-center'
                                     name="gender"
                                     type="option"
@@ -190,22 +207,26 @@ function Register() {
                             </div>
                             {formErrors && !formValues.gender && <p className='text-center alert-danger'>Gender is required</p>}
 
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>Email</label>
+
+                             <div className="field mb-3 m-2 text-center form-group">
+                                <label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Upload Image</label>
+                                </div>
+                                <div  className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="image me-3" size='lg' className='required-field'/>
                                 <input
                                     className='form-control text-center'
-                                    type="text"
-                                    name="email"
-                                    placeholder="Email"
-                                    value={formValues.email}
-                                    onChange={handleChange} />
+                                    type="file"
+                                    name="file"
+                                    placeholder="Upload Image"
+                                    accept=".png, .jpg, .jpeg"
+                                    onChange={ImageUpload} />
                             </div>
-                            {formErrors && !formValues.email ?<p className='text-center alert-danger'>Email is required</p>:""}
-                            {emailValidation && <p className='text-center alert-danger'>This is not a valid format</p>}
+                            {formErrors && !formValues.file && <p className='text-center alert-danger'>Upload image</p>}
 
 
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>Select Security Question</label>
+
+                            <div className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="lock me-3" size='lg' className='required-field'/>
                                 <select className='form-control text-center'
                                     name="securityQuestion"
                                     type="option"
@@ -223,8 +244,8 @@ function Register() {
                             {formErrors && !formValues.securityQuestion && <p className='text-center alert-danger'>Security Question is required</p>}
 
 
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>Answer of Security Question</label>
+                            <div className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="key me-3" size='lg'className='required-field'/>
                                 <input
                                     className='form-control text-center'
                                     type="text"
@@ -235,9 +256,8 @@ function Register() {
                             </div>
                             {formErrors && !formValues.securityAnswer && <p className='text-center alert-danger'>Unique Security Answer is required</p>}
 
-
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>Password</label>
+                            <div className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="lock me-3" size='lg' className='required-field'/>
                                 <input
                                     className='form-control text-center'
                                     type="password"
@@ -250,8 +270,8 @@ function Register() {
                             {passwordValidation && <p className='text-center alert-danger'>Password must not contain Whitespaces and should contain at least one uppercase,one lowercase,one special,one digit and password should be the length of 10-16 characters</p>}
 
 
-                            <div className="field mb-3 m-2 text-center form-group">
-                                <label>Confirm Password</label>
+                            <div className="d-flex flex-row align-items-center mb-4 ">
+                                <MDBIcon fas icon="key me-3" size='lg' className='required-field'/>
                                 <input
                                     className='form-control text-center'
                                     type="password"
@@ -266,11 +286,18 @@ function Register() {
 
 
                             <div className='mb-3 m-2 text-center form-group'>
-                                <button className="btn btn-warning text-center">Register</button>
+                                <button className="btn text-center"style={{backgroundColor:"#741b47",color:"#c5aa6a",fontWeight: 'bold'}}>Register</button>
                             </div>
 
-
                         </form>
+                        <div className=''>
+                                <h6 className='required-field align-items-center text-center'>
+                                    Note: 1. All fields are mandatory marked with asterisk 
+                                </h6>
+                                <h6 className='align-items-center text-center'>
+                                    2. Password must not contain Whitespaces and should contain at least one uppercase,one lowercase,one special,one digit and password should be the length of 10-16 characters.
+                                </h6>
+                        </div>
                     </div>
                 </div>
             </div >

@@ -43,6 +43,11 @@
 .product-list ul{
   margin: 2px;
 }
+.required-field::after {
+  content: "*";
+  color: red;
+  margin-left:2px
+}
 
 @keyframes App-logo-spin {
   from {

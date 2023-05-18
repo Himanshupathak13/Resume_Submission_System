@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate,Link} from 'react-router-dom';
+
 const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
   const auth = localStorage.getItem('new');
@@ -15,16 +16,16 @@ const AdminDashboard = () => {
     setProducts(result);
   }
   
-  const doDelete = async (uploadfile) => {
-    console.log(uploadfile)
-    const newresult = await fetch(`http://localhost:3001/userdashboard/${uploadfile}`, {
-      method: "Delete"
-    });
-    const newdata = await newresult.json();
-    if (newdata) {
-      getProducts();
+    const doDelete = async (uploadfile) => {
+      console.log(uploadfile)
+      const newresult = await fetch(`http://localhost:3001/userdashboard/${uploadfile}`, {
+        method: "Delete"
+      });
+      const newdata = await newresult.json();
+      if (newdata) {
+        getProducts();
+      }
     }
-  }
 
     
   const dodownload = async (uploadfile) => {
@@ -41,9 +42,9 @@ const AdminDashboard = () => {
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"></link>
       <script src="sweetalert.min.js"></script>
 
-      <section className="text-center bg-warning m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
+      <section style={{backgroundColor:"#c5aa6a"}}className="text-center m-2 mt-2 p-2 d-flex aligns-items-center justify-content-md-center ">
 
-        <h4 className="p-2 mt-5">Welcome to Admin Dashboard Page</h4>
+        <h4 className="p-2 mt-5"style={{color:"#741b47"}}>WELCOME TO ADMIN DASHBOARD PAGE</h4>
 
       </section>
       <div className='product-list'>

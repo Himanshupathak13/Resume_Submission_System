@@ -15,8 +15,10 @@ import PrivateComponent from './components/PrivateComponent';
 import PrivateComponent2 from './components/PrivateComponent2';
 import Upload from './components/Upload';
 import UserDashboard from './components/UserDashboard';
-import AdminLogin from './components/AdminLogin'
-import AdminDashboard from './components/AdminDashboard'
+import AdminLogin from './components/AdminLogin';
+import AdminDashboard from './components/AdminDashboard';
+//import Pagination from './components/Pagination';
+//import { usePagination } from './components/usePagination';
 
 
 

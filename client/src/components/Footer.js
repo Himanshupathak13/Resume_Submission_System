@@ -39,7 +39,7 @@ const Footer = () => {
                         <div className="row mt-3">
                             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                                 <h6 className="text-uppercase fw-bold mb-4">
-                                    <i className="fas fa-gem me-3"></i>DIGITAL INDIA
+                                    <i className="fas fa-gem me-3"></i>RESUME SUBMISSION SYSTEM
                                 </h6>
 
                             </div>
@@ -61,22 +61,7 @@ const Footer = () => {
 
                                 </p>
                             </div>
-                            <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                                <h6 className="text-uppercase fw-bold mb-4">Company
-                                </h6>
-                                <p>
-                                    <a href="#!" className="text-reset text-decoration-none">About</a>
-                                </p>
-                                <p>
-                                    <a href="#!" className="text-reset text-decoration-none">Careers</a>
-                                </p>
-                                <p>
-                                    <a href="#!" className="text-reset text-decoration-none">Support</a>
-                                </p>
-                                <p>
-                                    <a href="#!" className="text-reset text-decoration-none">FAQ</a>
-                                </p>
-                            </div>
+                            
                             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                                 <h6 className="text-uppercase fw-bold mb-4">
                                     Contact
